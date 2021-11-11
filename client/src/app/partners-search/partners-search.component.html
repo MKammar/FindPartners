@@ -1,0 +1,45 @@
+<app-navbar></app-navbar>
+<div class="container">
+  <div class="row mt-5">
+    <div class="offset-md-2  col-md-3 col-6">
+      <input class="form-control" [(ngModel)]="Lsearch" placeholder="Start distance in km">
+    </div>
+    <div class="col-md-3 col-6">
+      <input class="form-control" [(ngModel)]="Hsearch" placeholder="End distance in km">
+    </div>
+    <div class="col-md-1 col-2 pr-md-0 offset-md-0 offset-3 mt-md-0 mt-3">
+      <button class="btn btn-outline-primary" (click)="onSubmit()">Find</button>
+    </div>
+    <div class="col-md-1 col-2 p-md-0 mt-md-0 mt-3">
+      <button class="btn btn-primary" (click)="onReset()">Reset</button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <p class="offset-md-1 text-danger" *ngIf="message">{{ message }}</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 mt-3" *ngFor="let partner of partners | paginate: { id:'AlbumsList',
+    itemsPerPage: 5,
+    currentPage: page,
+    totalItems: totalRec }">
+      <div class="media">
+        <img class="mr-3" src="../../assets/Images/noimage.jpg" alt="image">
+        <div class="media-body">
+          <h5 class="mt-0">{{ partner.name }}</h5>
+          <ul><i class="fa fa-map-marker" aria-hidden="true"></i><strong> Address</strong>
+            <li *ngFor="let address of partner.address">{{ address.address }} <i class="fa fa-eye" aria-hidden="true" [routerLink] = "['/ViewOnMap',address.Long,address.Latit]" ></i></li>
+          </ul>
+          <p>Company Website: <a [href]="partner.website" target="_blank">{{ partner.website }}</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col mt-5">
+      <pagination-controls id="AlbumsList"  (pageChange)="page = $event"></pagination-controls>
+    </div>
+  </div>
+</div>
